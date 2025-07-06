@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "resend-swift",
+    name: "ResendSwift",
     platforms: [
         .macOS(.v10_15),
         .iOS(.v13),
@@ -14,8 +14,8 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "resend-swift",
-            targets: ["resend-swift"]
+            name: "ResendSwift",
+            targets: ["ResendSwift"]
         ),
     ],
     dependencies: [
@@ -25,7 +25,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "resend-swift",
+            name: "ResendSwift",
             dependencies: [
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
                 .product(name: "OpenAPIURLSession", package: "swift-openapi-urlsession"),
