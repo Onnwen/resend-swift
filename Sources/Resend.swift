@@ -8,9 +8,9 @@
 import Foundation
 import OpenAPIRuntime
 
-public final class Resend {
-    private var apiKey: String
-    private var client: APIProtocol
+public final class ResendClient: Sendable {
+    private let apiKey: String
+    private let client: APIProtocol
     
     public init(apiKey: String) throws {
         self.apiKey = apiKey
