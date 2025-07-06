@@ -7,7 +7,6 @@
 
 import Foundation
 import OpenAPIRuntime
-import OpenAPIURLSession
 
 public final class Resend {
     private var apiKey: String
@@ -15,17 +14,15 @@ public final class Resend {
     
     public init(apiKey: String) throws {
         self.apiKey = apiKey
-        self.client = Client(
-            serverURL: try Servers.Server1.url(),
-            transport: URLSessionTransport()
-        )
+        self.client = try getConfigureClient(apiKey: apiKey)
     }
     
+    @discardableResult
     public func sendEmail(_ body: Components.Schemas.SendEmailRequest, idempotencyKey: UUID = UUID()) async throws -> String? {
         let response = try await client.sendEmail(
             .init(
                 headers: .init(
-                    Idempotency_hyphen_Key: idempotencyKey.uuidString
+                    Idempotency_hyphen_Key: idempotencyKey.uuidString,
                 ),
                 body: .json(
                     body
