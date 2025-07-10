@@ -11,12 +11,12 @@ import OpenAPIRuntime
 public final class ResendClient: Sendable {
     private let apiKey: String
     private let client: APIProtocol
-    
+
     public init(apiKey: String) throws {
         self.apiKey = apiKey
-        self.client = try getConfigureClient(apiKey: apiKey)
+        client = try getConfigureClient(apiKey: apiKey)
     }
-    
+
     @discardableResult
     public func sendEmail(_ body: Components.Schemas.SendEmailRequest, idempotencyKey: UUID = UUID()) async throws -> String? {
         let response = try await client.sendEmail(
@@ -29,7 +29,7 @@ public final class ResendClient: Sendable {
                 )
             )
         )
-        
+
         switch response {
         case let .ok(body):
             return try body.body.json.id
@@ -37,12 +37,12 @@ public final class ResendClient: Sendable {
             throw ResendError.status(statusCode)
         }
     }
-    
+
     public func cancelEmail(_ id: String) async throws {
         let response = try await client.cancelEmail(
             path: .init(email_id: id)
         )
-        
+
         switch response {
         case .ok:
             return
@@ -50,7 +50,7 @@ public final class ResendClient: Sendable {
             throw ResendError.status(statusCode)
         }
     }
-    
+
     enum ResendError: Error {
         case unknown
         case status(Int)

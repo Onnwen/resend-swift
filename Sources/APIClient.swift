@@ -11,18 +11,18 @@ import OpenAPIRuntime
 import OpenAPIURLSession
 
 func getConfigureClient(apiKey: String) throws -> APIProtocol {
-    return Client(
-        serverURL: try Servers.Server1.url(),
+    try Client(
+        serverURL: Servers.Server1.url(),
         transport: URLSessionTransport(),
         middlewares: [
-            AuthenticationMiddleware(apiKey: apiKey)
+            AuthenticationMiddleware(apiKey: apiKey),
         ]
     )
 }
 
 struct AuthenticationMiddleware: ClientMiddleware {
     var apiKey: String
-    
+
     init(apiKey: String) {
         self.apiKey = apiKey
     }
@@ -31,7 +31,7 @@ struct AuthenticationMiddleware: ClientMiddleware {
         _ request: HTTPRequest,
         body: HTTPBody?,
         baseURL: URL,
-        operationID: String,
+        operationID _: String,
         next: (HTTPRequest, HTTPBody?, URL) async throws -> (HTTPResponse, HTTPBody?)
     ) async throws -> (HTTPResponse, HTTPBody?) {
         var request = request
