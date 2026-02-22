@@ -1551,8 +1551,10 @@ components:
         to:
           description: Recipient email address. For multiple addresses, send as an array of strings. Max 50.
           oneOf:
-            - type: string
-            - type: array
+            - title: email
+              type: string
+            - title: emails
+              type: array
               items:
                 type: string
               minItems: 1
@@ -1639,8 +1641,10 @@ components:
           type: object
           additionalProperties:
             oneOf:
-              - type: string
-              - type: number
+              - title: string
+                type: string
+              - title: number
+                type: number
           description: Template variables object with key/value pairs.
           example:
             variableName: 'Sign up now'
